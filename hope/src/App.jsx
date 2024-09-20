@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -12,12 +12,14 @@ import ReportPage from './pages/ReportPage'
 import DonatePage from './pages/DonatePage'
 import ProfilePage from './pages/ProfilePage'
 import DonationItemPage from './pages/DonationItemPage'
-
+import Footer from './components/Footer'
+import CreateCampaignPage from './pages/CreateCampaignPage'
 function App() {
-
+  
   return (
-    <div className='max-w-screen'>
+    <div className='max-w-screen min-h-screen flex flex-col justify-between '>
     <NavBar/>
+    <div className='min-h-[50vh]'>
       <Routes>
         <Route path='/' element={<HomePage/>} ></Route>
         <Route path='/login' element={<LoginPage/>} ></Route>
@@ -27,7 +29,11 @@ function App() {
         <Route path='/donate' element={<DonatePage/>} ></Route>
         <Route path='/profile' element={<ProfilePage/>} > </Route>
         <Route path='/donate/:id' element={<DonationItemPage/>} ></Route>
+        <Route path="/create-campaign" element={<CreateCampaignPage/>} ></Route>
       </Routes>
+
+      </div>
+      <Footer />
     </div>
   )
 }

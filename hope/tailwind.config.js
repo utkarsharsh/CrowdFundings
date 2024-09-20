@@ -20,6 +20,10 @@ export default {
           "0%, 100%": { backgroundColor: "#d0efff" }, // Initial and final color (bluefive)
           "50%": { backgroundColor: "#BFE9FF" }, // Mid transition color (darker)
         },
+        bgPulse: {
+          '0%, 100%': { backgroundColor: '#BFE9FF' }, // Starting color
+          '50%': { backgroundColor: '#A0D8FF' }, // Pulsed color
+        },
         moveRight: {
           '0%': { 
             transform: 'translateX(-100%) rotate(0deg)', 
