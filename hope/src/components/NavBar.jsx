@@ -8,7 +8,7 @@ const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-bluefive text-textbrown font-medium p-4 shadow-lg">
+    <nav className="bg-bluefive text-textbrown font-medium p-4 shadow-b-black shadow-inner border-b border-gray-400 ">
       <div className="container mx-auto flex justify-between items-center">
         
         {/* Brand Name */}
@@ -39,10 +39,10 @@ const NavBar = () => {
             Report Fraud
           </NavLink>
           <NavLink 
-            to="/about" 
+            to="/create-campaign" 
             className={({ isActive }) => `hover:text-secondary cursor-pointer ${isActive ? 'underline' : ''}`}
           >
-            About
+            Create Campaign
           </NavLink>
         </div>
 
@@ -52,14 +52,14 @@ const NavBar = () => {
             <>
               {/* Login Button */}
               <button 
-                className="bg-transparent border border-blueone text-blueone px-4 py-2 rounded hover:bg-blueone hover:text-white transition duration-300"
+                className="bg-transparent border border-blueone text-blueone px-4 py-2 rounded hover:bg-bluetwo hover:text-white transition duration-300"
               >
                  <NavLink to='/login'>Login</NavLink>
               </button>
 
               {/* Signup Button */}
               <button 
-                className="bg-blueone text-white px-4 py-2 rounded hover:bg-transparent hover:text-blueone border border-blueone transition duration-300"
+                className="bg-bluetwo text-white px-4 py-2 rounded hover:bg-transparent hover:text-blueone border border-bluetwo transition duration-300"
               >
                  <NavLink to="/signup">Signup</NavLink>
               </button>
@@ -105,10 +105,10 @@ const NavBar = () => {
             Report Fraud
           </NavLink>
           <NavLink 
-            to="/about" 
+            to="/create-campaign" 
             className="block text-center px-4 py-2 w-full"
           >
-            About
+            Create Campaign
           </NavLink>
           {!isLoggedIn ? (
             <>

@@ -45,9 +45,14 @@ const HomePage = () => {
               Empower donors to contribute with confidence, knowing their
               support is reaching genuine and impactful initiatives.
             </p>
+            <div className="flex gap-3 sm:gap-10 flex-col sm:flex-row md:justify-start  justify-center items-center">
             <NavLink to="/donate"><button className="bg-bluethree hover:bg-bluetwo text-white px-8 py-3 mt-5 rounded-full font-medium ">
               Make A Donation
             </button></NavLink>
+            <NavLink to="/create-campaign"><button className="bg-red-500 hover:bg-red-600 text-white px-8 py-3 mt-5 rounded-full font-medium ">
+              Create Campaign 
+            </button></NavLink>
+            </div>
             
           </div>
           {/* right */}
