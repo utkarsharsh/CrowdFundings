@@ -9,7 +9,7 @@ const JoinOurMission = () => {
       >
         <p className="text-4xl md:text-6xl font-semibold text-white">Join our mission</p>
         <div className="flex flex-col sm:flex-row items-start gap-10">
-          <NavLink to="/donate">
+          <NavLink to="/create-campaign">
             <button className="uppercase font-extrabold text-sm bg-white text-primary px-3 py-2 rounded-full">become volunteer❤️</button>
           </NavLink>
           <NavLink to="/donate">
