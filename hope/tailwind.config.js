@@ -14,6 +14,7 @@ export default {
         primaryDark:"#058BDE",
         secondary: "#000",
       },
+      
       keyframes: {
         bgPulse: {
           "0%, 100%": { backgroundColor: "#d0efff" }, // Initial and final color (bluefive)
