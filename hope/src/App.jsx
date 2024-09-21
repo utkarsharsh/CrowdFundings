@@ -31,8 +31,6 @@ function App() {
         <Route path='/report-fraud' element={<ReportPage account={account}/>} ></Route>
         <Route path='/donate' element={<DonatePage account={account} setmycampain={setmycampain}/>} ></Route>
         <Route path='/profile' element={<ProfilePage/>} > </Route>
-
-      
       <Route path="/subscription" element={<SubscriptionPage/>}></Route>
         <Route path='/donate/:id' element={<DonationItemPage account={account}/>} ></Route>
         <Route path="/create-campaign" element={<CreateCampaignPage account={account}/>} ></Route>
