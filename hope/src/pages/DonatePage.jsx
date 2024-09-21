@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { campaignData } from "../Data/CharityData";
 import Oval from "../assets/Oval.png";
+import { ethers } from "ethers";
 import Rectangle from "../assets/Rectangle.png"
 import { MdArrowOutward } from "react-icons/md";
 import Group8 from "../assets/Group8.png";
 import { NavLink } from "react-router-dom";
 import { MdContentCopy } from "react-icons/md";
 import toast from "react-hot-toast";
+import getCampaigns from "../web3Functions/GetallCampaign/Getallcampain";
+const DonatePage = ({account}) => {
+  const [campaign,setcampaign]=useState([]);
+  async function handlecomingcampaign(){
+    const result = await getCampaigns(account);
+    setcampaign(result.campaigns);
+    console.log(result.campaigns);
+  }
 
-const DonatePage = () => {
+  useEffect(()=>{
+       handlecomingcampaign();
+  },[account])
   const getDaysLeft = (endDate) => {
     const end = new Date(endDate);
     const today = new Date();
@@ -30,8 +41,12 @@ const DonatePage = () => {
             </h1>
             {/* All Cards */}
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
-              {campaignData.map((data) => (
-                <div
+              {campaign.map((data) => {
+              if(data?.image=='w' || !data.image || data?.image == 'image-url'){
+               return <></>
+              }
+
+             return ( <div
                   key={data.id}
                   className="flex flex-col gap-3 text-bluethree p-5 bg-white/90 shadow-[0_8px_32px_0_rgba(51,98,135,0.7)] backdrop-blur-[25px] backdrop-saturate-0 border-2  rounded-[12px] border-1 border-bluefour/60">
                   {/* top */}
@@ -40,18 +55,18 @@ const DonatePage = () => {
                       <div className="flex gap-2">
                         <div className="p-[6px] border-2 border-sky-600 rounded-xl">
                           <img
-                            src={data.thumbnail}
+                            src={data?.image}
                             className="w-20 h-20 aspect-square object-fill rounded-xl"
-                            alt={data.title} // Added alt attribute for accessibility
+                            alt={data?.title} // Added alt attribute for accessibility
                           />
                         </div>
                         <div className="flex flex-col">
-                        <p className="text-xl mt-1 font-bold">{data.title}</p>
+                        <p className="text-xl mt-1 font-bold">{data?.title}</p>
                         <div className="flex items-center gap-3" >
-                        <p className="text-sm text-red-500 mt-1 font-bold">Id: {data.id}</p>
+                        <p className="text-sm text-red-500 mt-1 font-bold">Id: {data?.owner}</p>
                         <button
     onClick={() => {
-        navigator.clipboard.writeText(data.id)
+        navigator.clipboard.writeText(data.owner)
             .then(() => toast.success("Text Copied"))
             .catch(() => toast.error("Failed to Copy"));
     }}
@@ -70,13 +85,13 @@ const DonatePage = () => {
                     </div>
                     <div className="flex flex-col sm:flex-row gap-3 justify-between items-start sm:items-center">
                       <p className="bg-gray-200 text-bluethree px-3 py-2 rounded-xl font-medium">
-                        #{data.category}
+                        #{data?.theme}
                       </p>
                       <div className="flex gap-2">
                         <img src={Group8} className="h-6" alt="Group Icon" /> {/* Added alt attribute */}
                         <p className="flex gap-[2px] font-bold">
                           <span>+</span>
-                          <span>{data.donated}</span>
+                          <span>{data?.donated}</span>
                           <span className="text-black/80">Donated</span>
                         </p>
                       </div>
@@ -91,10 +106,10 @@ const DonatePage = () => {
                     </p>
                     <div className="flex items-center justify-between">
                       <p className="flex items-center gap-1 font-semibold">
-                        <span className="font-extrabold">Ξ</span> {data.raisedAmount}
+                        <span className="font-extrabold">Ξ</span> { Number(data?.amountCollected)}
                       </p>
                       <p className="flex items-center gap-1 text-violet-700 font-semibold">
-                        <span className="font-extrabold">Ξ</span> {data.requiredAmount}
+                        <span className="font-extrabold">Ξ</span> {Number(data?.target)}
                       </p>
                     </div>
                     <div className="flex bg-sky-100 rounded-full h-[3px]">
@@ -107,7 +122,7 @@ const DonatePage = () => {
                     </div>
                     <div className="flex flex-col sm:flex-row gap-2 mt-2 justify-between">
                       <p className="bg-gray-200 text-gray-500 my-auto py-2 px-3 rounded-xl font-medium">
-                        {getDaysLeft(data.endDate)} days left
+                         {getDaysLeft(Number(data.deadline)*1000 )} days left
                       </p>
                       <div className="uppercase flex flex-1 sm:flex-none  text-white font-bold px-5 py-2 rounded-lg sm:rounded-full mt-2 bg-bluethree hover:bg-bluetwo">
                       <NavLink to={`/donate/${data.id}`}>
@@ -118,8 +133,8 @@ const DonatePage = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                </div>)
+})}
             </div>
           </div>
           {/* right */}

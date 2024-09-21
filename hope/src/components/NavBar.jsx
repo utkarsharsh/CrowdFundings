@@ -2,10 +2,19 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaUserCircle } from "react-icons/fa";
-
-const NavBar = () => {
+import connectWallet from "../web3Functions/connectwallet/connect"
+const NavBar = ({setaccount}) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Show login/signup by default
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+    
+  async function handlemetamask (){
+    const result= await connectWallet();
+    if(result.result){
+      setaccount(result.account);
+      setIsLoggedIn(true);
+    }
+  }
+   
 
   return (
     <nav className="bg-bluefive text-textbrown font-medium p-4 shadow-b-black shadow-inner border-b border-gray-400 ">
@@ -13,7 +22,7 @@ const NavBar = () => {
         
         {/* Brand Name */}
         <div className="text-4xl text-black font-bold">
-          <NavLink to="/" className="hover:text-secondary">
+          <NavLink to="/" className="hover:text-secondary text-blueone">
             ᕼOᑭE
           </NavLink>
         </div>
@@ -22,25 +31,25 @@ const NavBar = () => {
         <div className="hidden md:flex space-x-8">
           <NavLink 
             to="/" 
-            className={({ isActive }) => `hover:text-secondary cursor-pointer ${isActive ? 'underline' : ''}`}
+            className={({ isActive }) => `hover:text-secondary cursor-pointer p-2  rounded-2xl ${isActive ? 'bg-blue-200' : ''}`}
           >
             Home
           </NavLink>
           <NavLink 
             to="/donate" 
-            className={({ isActive }) => `hover:text-secondary cursor-pointer ${isActive ? 'underline' : ''}`}
+            className={({ isActive }) => `hover:text-secondary cursor-pointer p-2  rounded-2xl ${isActive ? 'bg-blue-200' : ''}`}
           >
             Donate
           </NavLink>
           <NavLink 
             to="/report-fraud" 
-            className={({ isActive }) => `hover:text-secondary cursor-pointer ${isActive ? 'underline' : ''}`}
+            className={({ isActive }) => `hover:text-secondary cursor-pointer p-2 rounded-2xl ${isActive ? 'bg-blue-200' : ''}`}
           >
             Report Fraud
           </NavLink>
           <NavLink 
             to="/create-campaign" 
-            className={({ isActive }) => `hover:text-secondary cursor-pointer ${isActive ? 'underline' : ''}`}
+            className={({ isActive }) => `hover:text-secondary cursor-pointer text-blueone p-2 rounded-2xl ${isActive ? 'bg-blue-200' : ''}`}
           >
             Create Campaign
           </NavLink>
@@ -52,17 +61,12 @@ const NavBar = () => {
             <>
               {/* Login Button */}
               <button 
+               onClick={handlemetamask}
                 className="bg-transparent border border-blueone text-blueone px-4 py-2 rounded hover:bg-bluetwo hover:text-white transition duration-300"
               >
-                 <NavLink to='/login'>Login</NavLink>
+                Connect to metamask
               </button>
 
-              {/* Signup Button */}
-              <button 
-                className="bg-bluetwo text-white px-4 py-2 rounded hover:bg-transparent hover:text-blueone border border-bluetwo transition duration-300"
-              >
-                 <NavLink to="/signup">Signup</NavLink>
-              </button>
             </>
           ) : (
             <NavLink 
