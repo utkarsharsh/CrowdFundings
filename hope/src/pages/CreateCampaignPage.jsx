@@ -1,11 +1,20 @@
 import React, { useState } from "react";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
-import charitybg from "../assets/charitybg.png" 
-import "../index.css"
-const CreateCampaignPage = () => {
-  const [fileNames, setFileNames] = useState(Array(3).fill(""));
+import CreatCampaign from "../web3Functions/Createcampaign/CreateCampaign";
+import toast from "react-hot-toast";
+import charitybg from "../assets/charitybg.png"
+import axios from 'axios'
+import '../index.css'
+const CreateCampaignPage = ({account}) => {
+  const [fileNames, setFileNames] = useState(Array(4).fill(""));
   const [thumbnail, setThumbnail] = useState("");
-
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [target, setTarget] = useState("");
+  const [deadline, setDeadline] = useState("");
+  const [theme, setTheme] = useState("");
+  const [types, setTypes] = useState(""); 
+  const [images,setimages]=useState([]);
   const handleFileChange = (index, event) => {
     const files = event.target.files;
     if (files.length > 0) {
@@ -17,14 +26,50 @@ const CreateCampaignPage = () => {
     }
   };
 
-  const handleThumbnailChange = (event) => {
-    const files = event.target.files;
-    if (files.length > 0) {
-      setThumbnail(files[0].name);
+  const handleThumbnailChange = async (event) => {
+      let x=event.target.files[0];
+    const dat=new FormData();
+    dat.append("file",x);
+    dat.append("upload_preset","Brainop");
+    const {data} =await axios.post("https://api.cloudinary.com/v1_1/disggmk1g/image/upload",dat) ;
+     setThumbnail(data.url);
+  }
+
+  const handleOtherimgChange = async (event) => {
+    let x=event.target.files[0];
+  const dat=new FormData();
+  dat.append("file",x);
+  dat.append("upload_preset","Brainop");
+  const {data} =await axios.post("https://api.cloudinary.com/v1_1/disggmk1g/image/upload",dat) ;
+  setimages([...images,data.url]);
+}
+  
+
+  async function handlesubmit(){
+    const form={
+     title,
+     description,
+     target,
+     deadline,
+     types,
+     image:thumbnail,
+     theme
     }
-  };
+    const result = await CreatCampaign(account,form);
+    if(result.result){
+     toast.success("Campaign has been added");
+     setDeadline("");
+     setDescription("");
+     setTarget("");
+     setTitle("")
+     setTypes("")
+     setTheme("")
+        }
+
+  }
 
   const boxes = Array.from({ length: 20 });
+
 
   return (
     <div 
@@ -65,6 +110,7 @@ const CreateCampaignPage = () => {
                 placeholder="John Doe"
                 className="py-2 px-4 outline outline-bluefour rounded-md bg-white bg-opacity-90 text-primaryDark focus:outline-none focus:ring-2 focus:ring-bluefour shadow-md"
                 required
+
               />
             </div>
             <div className="flex font-[rowdies] flex-col w-full sm:w-[45%]">
@@ -76,6 +122,8 @@ const CreateCampaignPage = () => {
                 placeholder="Write a title"
                 className="py-2 px-4 outline outline-bluefour rounded-md bg-white bg-opacity-90 text-primaryDark focus:outline-none focus:ring-2 focus:ring-bluefour shadow-md"
                 required
+                value={title}
+                onChange={(e)=>{setTitle(e.target.value)}}
               />
             </div>
           </div>
@@ -88,6 +136,8 @@ const CreateCampaignPage = () => {
               placeholder="Write about fund raise"
               className="py-2 font-[rowdies] font-normal px-4 outline outline-bluefour rounded-md bg-white bg-opacity-90 text-primaryDark h-[150px] focus:outline-none focus:ring-2 focus:ring-bluefour shadow-md"
               required
+              value={description}
+              onChange={(e)=>{setDescription(e.target.value)}}
             />
           </div>
 
@@ -127,10 +177,12 @@ const CreateCampaignPage = () => {
                 Goal <span className="text-pink-500">*</span>
               </label>
               <input
-                type="text"
+                type="number"
                 placeholder="ETH 0.50"
                 className="py-2 px-4 outline outline-bluefour rounded-md bg-white bg-opacity-90 text-primaryDark focus:outline-none focus:ring-2 focus:ring-bluefour shadow-md"
                 required
+                value={target}
+                onChange={(e)=>{setTarget(e.target.value)}}
               />
             </div>
             <div className="flex font-[rowdies] flex-col w-full sm:w-[45%]">
@@ -141,6 +193,8 @@ const CreateCampaignPage = () => {
                 type="date"
                 className="py-2 px-4 outline outline-bluefour rounded-md bg-white bg-opacity-90 text-primaryDark focus:outline-none focus:ring-2 focus:ring-bluefour shadow-md"
                 required
+                value={deadline}
+                onChange={(e)=>{setDeadline(e.target.value)}}
               />
             </div>
           </div>
@@ -149,13 +203,25 @@ const CreateCampaignPage = () => {
             <label className="font-[rowdies] text-textbrown mb-2">
               Category <span className="text-pink-500">*</span>
             </label>
-            <select className="py-2 px-4 outline outline-bluefour rounded-md bg-white bg-opacity-90 text-primaryDark focus:outline-none focus:ring-2 focus:ring-bluefour shadow-md" required>
+            <select className="py-2 px-4 outline outline-bluefour rounded-md bg-white bg-opacity-90 text-primaryDark focus:outline-none focus:ring-2 focus:ring-bluefour shadow-md" required onChange={(e)=>{setTypes(e.target.value)}} value={types}>
               <option value="" disabled>Select a category</option>
               <option value="education">Education</option>
               <option value="health">Health</option>
               <option value="hunger">Hunger</option>
               <option value="disaster">Disaster</option>
               <option value="other">Other</option>
+            </select>
+          </div>
+
+          
+          <div className="flex font-[rowdies] flex-col">
+            <label className="font-[rowdies] text-textbrown mb-2">
+              Theme <span className="text-pink-500">*</span>
+            </label>
+            <select className="py-2 px-4 outline outline-bluefour rounded-md bg-white bg-opacity-90 text-primaryDark focus:outline-none focus:ring-2 focus:ring-bluefour shadow-md" required onChange={(e)=>{setTheme(e.target.value)}} value={theme}>
+              <option value="" disabled>Select a category</option>
+              <option value="education">NGO</option>
+              <option value="health">Indivisdual</option>
             </select>
           </div>
 
@@ -170,7 +236,7 @@ const CreateCampaignPage = () => {
                   accept="image/*,video/*"
                   id={`file-upload-${index}`}
                   className="hidden"
-                  onChange={(event) => handleFileChange(index, event)}
+                  onChange={(event) =>handleOtherimgChange}
                   required
                 />
                 <label
@@ -188,6 +254,7 @@ const CreateCampaignPage = () => {
             <button
               type="submit"
               className="bg-bluethree text-white py-2 px-4 rounded-md hover:bg-bluetwo transition duration-300"
+              onClick={handlesubmit}
             >
               Create Campaign
             </button>

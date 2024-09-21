@@ -16,22 +16,23 @@ import Footer from './components/Footer'
 import CreateCampaignPage from './pages/CreateCampaignPage'
 import SubscriptionPage from './pages/SubscriptionPage'
 function App() {
-  
+  const [account,setaccount]=useState();
+  const [mycampain,setmycampain]=useState();
   return (
+    
     <div className='max-w-screen min-h-screen flex flex-col justify-between '>
-    <NavBar/>
+    <NavBar setaccount={setaccount}/>
     <div className='min-h-[50vh]'>
       <Routes>
         <Route path='/' element={<HomePage/>} ></Route>
         <Route path='/login' element={<LoginPage/>} ></Route>
         <Route path='/signup' element={<SignupPage/>} ></Route>
-        <Route path='/about' element={<AboutPage/>} ></Route>
-        <Route path='/report-fraud' element={<ReportPage/>} ></Route>
-        <Route path='/donate' element={<DonatePage/>} ></Route>
+        <Route path='/about' element={<AboutPage />} ></Route>
+        <Route path='/report-fraud' element={<ReportPage account={account}/>} ></Route>
+        <Route path='/donate' element={<DonatePage account={account} setmycampain={setmycampain}/>} ></Route>
         <Route path='/profile' element={<ProfilePage/>} > </Route>
-        <Route path='/donate/:id' element={<DonationItemPage/>} ></Route>
-        <Route path="/create-campaign" element={<CreateCampaignPage/>} ></Route>
-        <Route path="/subscription" element={<SubscriptionPage/>}></Route>
+        <Route path='/donate/:id' element={<DonationItemPage account={account}/>} ></Route>
+        <Route path="/create-campaign" element={<CreateCampaignPage account={account}/>} ></Route>
       </Routes>
 
       </div>
