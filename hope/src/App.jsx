@@ -14,6 +14,7 @@ import ProfilePage from './pages/ProfilePage'
 import DonationItemPage from './pages/DonationItemPage'
 import Footer from './components/Footer'
 import CreateCampaignPage from './pages/CreateCampaignPage'
+import SubscriptionPage from './pages/SubscriptionPage'
 function App() {
   
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path='/profile' element={<ProfilePage/>} > </Route>
         <Route path='/donate/:id' element={<DonationItemPage/>} ></Route>
         <Route path="/create-campaign" element={<CreateCampaignPage/>} ></Route>
+        <Route path="/subscription" element={<SubscriptionPage/>}></Route>
       </Routes>
 
       </div>

@@ -71,7 +71,7 @@ const AboutAndNumber = () => {
         <p className='text-textbrown  sm:text-4xl text-3xl font-[Rowdies]'>Unselfish love of  <br/>
         one's fellow men</p>
         <p className='text-textbrown max-w-96'>Charity is the act of giving help to those in need of it. It is a humanitarian act. It involves giving money, goods or time and effort to those who need it.</p>
-        <NavLink to="/about">
+        <NavLink to="/subscription">
           <button className="border-2 border-gray-500 text-primary hover:scale-105 transform duration-300 font-semibold px-6 py-2 mt-2 rounded-full ">
           Be A Volunteer
           </button>
