@@ -3,21 +3,22 @@ const mongoose = require("mongoose");
 const charityMaterialSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
     trim: true,
   },
-  premium:{
-    type:Boolean,
-    default:false,
+  premium: {
+    type: Boolean,
+    default: false,
   },
   title: {
+    //
     type: String,
-    required: true,
+
     trim: true,
   },
   description: {
+    //
     type: String,
-    required: true,
+
     trim: true,
   },
   address: {
@@ -28,31 +29,32 @@ const charityMaterialSchema = new mongoose.Schema({
     type: Number,
     trim: true,
   },
-  thumbnail: {
+  image: {
     type: String,
-    required: true,
+
     trim: true,
   },
   raisedAmount: {
     type: Number,
     default: 0,
   },
-  requiredAmount: {
+  target: {
+    //
     type: Number,
-    required: true,
   },
   donated: {
     type: Number,
     default: 0,
   },
-  category: {
+  types: {
+    //
     type: String,
-    required: true,
+
     enum: ["Education", "Health", "Disaster", , "Hunger", "Other"],
   },
-  endDate: {
+  deadline: {
+    //
     type: Date,
-    required: true,
   },
   images: {
     type: [String],
@@ -63,8 +65,6 @@ const charityMaterialSchema = new mongoose.Schema({
       message: "You must provide exactly 3 image URLs.",
     },
   },
-  messages: [{ type: mongoose.Schema.Types.ObjectId, 
-    ref:"CharityMsg"
-   }],
+  messages: [{ type: mongoose.Schema.Types.ObjectId, ref: "CharityMsg" }],
 });
 module.exports = mongoose.model("CharityMaterial", charityMaterialSchema);

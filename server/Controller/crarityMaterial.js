@@ -3,26 +3,14 @@ const charityMaterialSchema = require("../model/charityMaterialSchema");
 const createCharityMaterial = async (req, res) => {
   try {
     const {
-      name,
-      title,
-      description,
       address,
-      thumbnail,
-      requiredAmount,
-      endDate,
-      category,
       images,
+      identity,
     } = req.body;
     const data = await charityMaterialSchema.create({
-      name,
-      title,
-      description,
       address,
-      thumbnail,
-      requiredAmount,
-      endDate,
-      category,
       images,
+      identity,
     });
     res.status(200).json({
       success: true,
@@ -39,7 +27,8 @@ const createCharityMaterial = async (req, res) => {
 };
 const getAllCharityMaterial = async (req, res) => {
   try {
-    const data = await charityMaterialSchema.find({}).populate("messages");
+    const {identity} = req.body;
+    const data = await charityMaterialSchema.findOne({identity}).populate("message")
     res.status(200).json({
       success: true,
       data,

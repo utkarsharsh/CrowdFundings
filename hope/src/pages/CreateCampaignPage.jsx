@@ -2,14 +2,11 @@ import React, { useState } from "react";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import CreatCampaign from "../web3Functions/Createcampaign/CreateCampaign";
 import toast from "react-hot-toast";
+import charitybg from "../assets/charitybg.png"
 import axios from 'axios'
-import charitybg from "../assets/charitybg.png" 
-import "../index.css"
-
-
+import '../index.css'
 const CreateCampaignPage = ({account}) => {
   const [fileNames, setFileNames] = useState(Array(4).fill(""));
-
   const [thumbnail, setThumbnail] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
