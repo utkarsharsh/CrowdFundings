@@ -8,8 +8,14 @@
   box-sizing: border-box;
   font-family: "Manrope", sans-serif;
 }
+
 .image-glow2 {
   border: 5px solid rgba(173, 216, 230, 0.9); /* Lighter border color */
   box-shadow: 0 0 30px rgba(0, 191, 255, 0.6); /* Increased glow radius */
+
+
+.image-glow {
+  border: 5px solid rgba(173, 216, 230, 0.9); /* Lighter border color */
+  box-shadow: 0 0 30px rgba(0, 191, 255, 0.6); /* Increased glow radius */
 
 }
