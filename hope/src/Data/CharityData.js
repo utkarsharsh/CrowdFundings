@@ -1,6 +1,7 @@
 export const campaignData = [
   {
     id:1,
+    premium:true,
     name: "John Doe",
     title: "Help the Children",
     description:
@@ -22,6 +23,7 @@ export const campaignData = [
   },
   {id:2,
     name: "Emily Smith",
+    premium:true,
     title: "Clean Water for All",
     description:
       "Access to clean water is a fundamental human right. Our mission is to provide clean drinking water to communities in need. Many families are forced to drink contaminated water, leading to serious health issues. Your contributions will help us build wells and provide water filtration systems.",
@@ -43,6 +45,7 @@ export const campaignData = [
   {
     id:3,
     name: "Michael Johnson",
+    premium:true,
     title: "Support Our Local Animal Shelter",
     description:
       "Our local animal shelter is struggling to provide care for abandoned and abused animals. We need your help to raise funds for food, medical supplies, and shelter improvements. Every donation counts and goes directly towards saving lives. Together, we can create a safe haven for these animals.",
@@ -64,6 +67,7 @@ export const campaignData = [
   {
     id:4,
     name: "Sophia Brown",
+    premium:true,
     title: "Empower Women Entrepreneurs",
     description:
       "Join us in empowering women entrepreneurs through skill development and funding. Many women in developing regions face barriers to starting their own businesses. This campaign provides training, resources, and small loans to help women achieve financial independence and contribute to their communities.",
@@ -85,6 +89,7 @@ export const campaignData = [
   {
     id:5,
     name: "David Lee",
+    premium:false,
     title: "Fight Climate Change",
     description:
       "Help us combat the devastating effects of climate change by supporting renewable energy projects and environmental initiatives. Your donations will contribute to a cleaner and healthier planet for future generations.",
@@ -105,6 +110,7 @@ export const campaignData = [
   },
   {
     id:6,
+    premium:false,
     name: "Sarah Kim",
     title: "Support Veterans",
     description:
@@ -125,6 +131,7 @@ export const campaignData = [
   },
   {
     id:7,
+    premium:false,
     name: "Thomas Wilson",
     title: "End Hunger",
     description:
@@ -145,6 +152,7 @@ export const campaignData = [
   },
   {
     id:8,
+    premium:false,
     name: "Olivia Taylor",
     title: "Support Mental Health",
     description:
@@ -165,6 +173,7 @@ export const campaignData = [
   },
   {
     id:9,
+    premium:false,
     name: "Daniel Hill",
     title: "Promote Education for All",
     description:
@@ -185,6 +194,7 @@ export const campaignData = [
   },
   {
     id:10,
+    premium:false,
     name: "Victoria Carter",
     title: "Protect Wildlife",
     description:

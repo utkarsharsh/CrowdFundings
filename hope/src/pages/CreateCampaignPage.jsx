@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
+
+import charitybg from "../assets/charitybg.png" 
+import "../index.css"
+const CreateCampaignPage = () => {
+  const [fileNames, setFileNames] = useState(Array(3).fill(""));
 import CreatCampaign from "../web3Functions/Createcampaign/CreateCampaign";
 import toast from "react-hot-toast";
 import axios from 'axios'
 const CreateCampaignPage = ({account}) => {
   const [fileNames, setFileNames] = useState(Array(4).fill(""));
+
   const [thumbnail, setThumbnail] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -70,7 +76,11 @@ const CreateCampaignPage = ({account}) => {
 
 
   return (
-    <div className="relative flex bg-bluefive justify-center items-center">
+    <div 
+    // className="relative flex bg-bluefive "
+    className='relative flex justify-center items-center max-w-[100vw] overflow-x-hidden bg-center  '
+    style={{ backgroundImage: `url(${charitybg})` }}
+    >
       <div className="absolute -z-0 inset-0 flex items-stretch">
         {boxes.map((_, index) => (
           <div
@@ -88,7 +98,7 @@ const CreateCampaignPage = ({account}) => {
         ))}
       </div>
 
-      <div className="z-50 bg-gray-50  border-gray-400 w-7/12 my-10 border-2 mx-auto flex justify-center items-center flex-col rounded-lg shadow-inner shadow-violet-200 sm:p-10 p-6">
+      <div className="image-glow2 z-50 bg-gray-50  border-gray-400 w-7/12 my-10 shadow-2xl mx-auto flex justify-center items-center flex-col rounded-xl sm:p-10 p-6">
         <h1 className="font-[rowdies] font-bold text-3xl md:text-4xl underline">
           Start a Campaign
         </h1>
@@ -135,8 +145,8 @@ const CreateCampaignPage = ({account}) => {
             />
           </div>
 
-          <div className="w-full flex justify-start items-center p-4 bg-[#8c6dfd] text-white h-[120px] rounded-md shadow-md">
-            <RiMoneyRupeeCircleFill className="text-6xl" />
+          <div className="w-full flex flex-col sm:flex-row justify-start items-center p-4 bg-[#8c6dfd] text-white rounded-md shadow-md">
+            <RiMoneyRupeeCircleFill className=" text-3xl sm:text-6xl" />
             <h4 className="font-[rowdies] font-bold text-[20px] ml-4">
               You will get 100% of the raised amount
             </h4>
@@ -223,7 +233,7 @@ const CreateCampaignPage = ({account}) => {
             <label className="font-[rowdies] text-textbrown mb-2">
               Upload Images/Video Proofs <span className="text-pink-500">*</span>
             </label>
-            {[...Array(4)].map((_, index) => (
+            {[...Array(3)].map((_, index) => (
               <div key={index} className="flex border-2 p-2 rounded-lg items-center">
                 <input
                   type="file"

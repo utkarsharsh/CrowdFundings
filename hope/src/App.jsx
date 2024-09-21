@@ -14,6 +14,7 @@ import ProfilePage from './pages/ProfilePage'
 import DonationItemPage from './pages/DonationItemPage'
 import Footer from './components/Footer'
 import CreateCampaignPage from './pages/CreateCampaignPage'
+import SubscriptionPage from './pages/SubscriptionPage'
 function App() {
   const [account,setaccount]=useState();
   const [mycampain,setmycampain]=useState();
@@ -30,8 +31,12 @@ function App() {
         <Route path='/report-fraud' element={<ReportPage account={account}/>} ></Route>
         <Route path='/donate' element={<DonatePage account={account} setmycampain={setmycampain}/>} ></Route>
         <Route path='/profile' element={<ProfilePage/>} > </Route>
+
+      
+      <Route path="/subscription" element={<SubscriptionPage/>}></Route>
         <Route path='/donate/:id' element={<DonationItemPage account={account}/>} ></Route>
         <Route path="/create-campaign" element={<CreateCampaignPage account={account}/>} ></Route>
+
       </Routes>
 
       </div>
