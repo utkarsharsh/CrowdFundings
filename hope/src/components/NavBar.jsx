@@ -28,13 +28,13 @@ const NavBar = ({setaccount}) => {
         </div>
 
         {/* Navigation Links */}
-        <div className="hidden md:flex space-x-8">
-          <NavLink 
+        <div className="hidden md:flex mx-5 items-center space-x-4 xl:space-x-8">
+          {/* <NavLink 
             to="/" 
             className={({ isActive }) => `hover:text-secondary cursor-pointer p-2  rounded-2xl ${isActive ? 'bg-blue-200' : ''}`}
           >
             Home
-          </NavLink>
+          </NavLink> */}
           <NavLink 
             to="/donate" 
             className={({ isActive }) => `hover:text-secondary cursor-pointer p-2  rounded-2xl ${isActive ? 'bg-blue-200' : ''}`}
@@ -52,6 +52,12 @@ const NavBar = ({setaccount}) => {
             className={({ isActive }) => `hover:text-secondary cursor-pointer text-blueone p-2 rounded-2xl ${isActive ? 'bg-blue-200' : ''}`}
           >
             Create Campaign
+          </NavLink>
+          <NavLink 
+            to="/subscription" 
+            className={({ isActive }) => `hover:text-secondary cursor-pointer text-blueone p-2 rounded-2xl ${isActive ? 'bg-blue-200' : ''}`}
+          >
+          Subscription
           </NavLink>
         </div>
 
@@ -89,7 +95,7 @@ const NavBar = ({setaccount}) => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-primary flex flex-col items-center space-y-4 py-4">
+        <div className="md:hidden bg-white/60 rounded-lg px-2 shadow-md mt-2 flex flex-col items-center space-y-4 py-4">
           <NavLink 
             to="/" 
             className="block text-center px-4 py-2 w-full"
@@ -113,6 +119,12 @@ const NavBar = ({setaccount}) => {
             className="block text-center px-4 py-2 w-full"
           >
             Create Campaign
+          </NavLink>
+          <NavLink 
+            to="/subscription" 
+            className="block text-center px-4 py-2 w-full"
+          >
+            Subscription
           </NavLink>
           {!isLoggedIn ? (
             <>

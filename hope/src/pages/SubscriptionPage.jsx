@@ -40,8 +40,8 @@ const SubscriptionPage = () => {
     className='relative flex flex-col gap-8 py-10 justify-center items-center max-w-[100vw] overflow-x-hidden   '
     style={{ backgroundImage: `url(${charitybg})` }}
     >
-        <h1 className="text-4xl md:text-5xl font-[rowdies] underline text-black">Choose Your Plan</h1>
-        <p className="text-lg font-medium text-blueone max-w-3xl">
+        <h1 className="text-4xl  md:text-5xl font-[rowdies] underline text-black">Choose Your Plan</h1>
+        <p className="text-lg w-10/12 md:w-full mx-auto font-medium text-blueone max-w-3xl">
           Unlock exclusive features and support our mission by subscribing to one of our membership plans.
           Select the plan that best suits your needs and start making a difference today!
         </p>
@@ -76,7 +76,7 @@ const SubscriptionPage = () => {
     className='relative flex flex-col gap-8 py-10 justify-center items-center max-w-[100vw] overflow-x-hidden   '
     style={{ backgroundImage: `url(${charitybg})` }}
     >
-        <h3 className="text-3xl md:text-4xl font-[rowdies] text-textbrown mb-4">
+        <h3 className="text-3xl flex w-10/12 items-center justify-center md:text-4xl font-[rowdies] text-textbrown mb-4">
           Join our community and make an impact!
         </h3>
         <NavLink to="/about-us">
