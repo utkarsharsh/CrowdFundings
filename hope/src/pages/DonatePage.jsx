@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { campaignData } from "../Data/CharityData";
 import Oval from "../assets/Oval.png";
+import Rectangle from "../assets/Rectangle.png";
 import { ethers } from "ethers";
-import Rectangle from "../assets/Rectangle.png"
 import { MdArrowOutward } from "react-icons/md";
 import Group8 from "../assets/Group8.png";
 import { NavLink } from "react-router-dom";
 import { MdContentCopy } from "react-icons/md";
 import toast from "react-hot-toast";
+
+import { MdStars } from "react-icons/md";
+
 import getCampaigns from "../web3Functions/GetallCampaign/Getallcampain";
 const DonatePage = ({account}) => {
   const [campaign,setcampaign]=useState([]);
@@ -16,6 +19,7 @@ const DonatePage = ({account}) => {
     setcampaign(result.campaigns);
     console.log(result.campaigns);
   }
+
 
   useEffect(()=>{
        handlecomingcampaign();
@@ -62,22 +66,34 @@ const DonatePage = ({account}) => {
                           />
                         </div>
                         <div className="flex flex-col">
-                        <p className="text-xl mt-1 font-bold">{data?.title}</p>
+
+                          <p className="text-xl mt-1 font-bold">{data.title}</p>
+                          <div className="flex items-center gap-3">
+                            <p className="text-sm text-red-500 mt-1 font-bold">
+                              Id: {data?.owner}
+                            </p>
+                            <button
+                              onClick={() => {
+                                navigator.clipboard
+                                  .writeText(data?.owner)
+                                  .then(() => toast.success("Text Copied"))
+                                  .catch(() => toast.error("Failed to Copy"));
+                              }}
+                              className="ml-2 p-1 text-sm hover:bg-gray-200 rounded"
+                              aria-label="Copy ID"
+                              title="Copy ID"
+                            >
+                              <MdContentCopy />
+                            </button>
+                          </div>
+                        
+
+                      
                         <div className="flex items-center gap-3" >
-                        <p className="text-sm text-red-500 mt-1 font-bold">Id: {data?.owner}</p>
-                        <button
-    onClick={() => {
-        navigator.clipboard.writeText(data.owner)
-            .then(() => toast.success("Text Copied"))
-            .catch(() => toast.error("Failed to Copy"));
-    }}
-    className="ml-2 p-1 text-sm hover:bg-gray-200 rounded"
-    aria-label="Copy ID"
-    title="Copy ID"
->
-    <MdContentCopy />
-</button>
+                        <p className="text-lg text-yellow-500 mt-1 font-bold">{Number(data?.id)<=10 && <MdStars/> }</p>
+                     
                         </div>
+
                         </div>
                       </div>
                       <div>
@@ -108,10 +124,12 @@ const DonatePage = ({account}) => {
                     </p>
                     <div className="flex items-center justify-between">
                       <p className="flex items-center gap-1 font-semibold">
-                        <span className="font-extrabold">Ξ</span> { Number(data?.amountCollected)}
+
+                        <span className="font-extrabold">Ξ</span> { String(data?.amountCollected)[0]}{ String(data?.amountCollected)[1]}
                       </p>
                       <p className="flex items-center gap-1 text-violet-700 font-semibold">
                         <span className="font-extrabold">Ξ</span> {Number(data?.target)}
+
                       </p>
                     </div>
                     <div className="flex bg-sky-100 rounded-full h-[3px]">
@@ -119,7 +137,7 @@ const DonatePage = ({account}) => {
                         className="bg-red-600 rounded-full h-full"
                         style={{
                           width: `${
-                            (data.raisedAmount / data.requiredAmount) * 100
+                            (25 / Number(data?.target)) * 100
                           }%`,
                         }}
                       ></div>

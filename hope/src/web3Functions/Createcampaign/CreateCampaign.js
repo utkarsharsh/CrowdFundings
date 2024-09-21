@@ -36,10 +36,11 @@ async function CreatCampaign(account, form) {
         );
 
         await tx.wait(); // Wait for the transaction to be mined
-
+        const data = await contract.numberOfCampaigns();
         // Notify user of success
         toast.success("Campaign created successfully!");
-        return { result: true };
+
+        return { result: true,teams:data };
     } catch (error) {
         console.error("Error creating campaign:", error);
         toast.error("Failed to create campaign. Please try again.");
