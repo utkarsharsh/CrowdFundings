@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
-
+import CreatCampaign from "../web3Functions/Createcampaign/CreateCampaign";
+import toast from "react-hot-toast";
+import axios from 'axios'
 import charitybg from "../assets/charitybg.png" 
 import "../index.css"
 const CreateCampaignPage = () => {
   const [fileNames, setFileNames] = useState(Array(3).fill(""));
-import CreatCampaign from "../web3Functions/Createcampaign/CreateCampaign";
-import toast from "react-hot-toast";
-import axios from 'axios'
+
 const CreateCampaignPage = ({account}) => {
   const [fileNames, setFileNames] = useState(Array(4).fill(""));
 
@@ -267,6 +267,6 @@ const CreateCampaignPage = ({account}) => {
       </div>
     </div>
   );
-};
+}};
 
-export default CreateCampaignPage;
+export default CreateCampaignPage
