@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import homeimage from "../assets/homeimage.png";
 import pic from "../assets/pic.png";
 import Oval from "../assets/Oval.png";
+import { ethers } from 'ethers';
 import Rectangle from "../assets/Rectangle.png";
 import { FaArrowRightLong } from "react-icons/fa6";
 import CardSection from "../components/CardSection";
@@ -18,8 +19,54 @@ import { Input } from 'postcss';
 import charitybg from "../assets/charitybg.png"
 import child2 from "../assets/child2.png"
 import childbg2 from "../assets/childbg2.png"
-const DonationItemPage = () => {
-    const { id } = useParams();
+import getCampaigns from "../web3Functions/GetallCampaign/Getallcampain";
+import  { useEffect } from "react";
+import markVote from '../web3Functions/markavote/markvote';
+import donateToCampaign from '../web3Functions/Donatecampaign/Donate';
+const DonationItemPage = ({account}) => {
+  const { id } = useParams();
+  const [myCampaign, setMyCampaign] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [ a ,setamount]= useState(null)
+
+
+  async function handleComingCampaign() {
+      const result = await getCampaigns(account);
+      const real = result.campaigns.filter((campaign) => campaign[0].toString() === id); // Compare as strings
+      if (real.length > 0) {
+          setMyCampaign(real[0]); // Set the first matching campaign
+      }
+      console.log(real,"wfdwebjfjwebdfjbe")
+      setLoading(false);
+  }
+
+  useEffect(() => {
+      handleComingCampaign();
+  }, [account]);
+
+  const getDaysLeft = (endDate) => {
+    const end = new Date(endDate);
+    const today = new Date();
+    // Calculate the difference in milliseconds and convert to days
+    const diffInTime = end - today;
+    const diffInDays = Math.ceil(diffInTime / (1000 * 60 * 60 * 24));
+    return diffInDays >= 0 ? diffInDays : 0; // Return 0 if the date has passed
+  };
+     
+ async function voteit (){
+   const result=markVote(id,account);
+
+    handleComingCampaign();
+   
+ }
+ async function handledonate (){
+   const result =await donateToCampaign(id,a,account);
+   if(result.result){
+    handleComingCampaign();
+   }
+ }
+     
+
     const ourNumber = [
       {
         id: 1,
@@ -64,12 +111,12 @@ const DonationItemPage = () => {
           {/* left */}
           <div className="ml-5 z-20 w-10/12 text-center md:text-left md:max-w-[30rem] space-y-5">
             <h1 className="flex text-textbrown text-5xl font-[Rowdies]">
-              Title
+              {myCampaign?.title}
             </h1>
             <p className="text-blueone">
-              Raise funds as an individual or NGO for causes that matter most.
-              Empower donors to contribute with confidence, knowing their
-              support is reaching genuine and impactful initiatives.
+              {
+                myCampaign?.description 
+              }
             </p>
             <NavLink to="/donate"><button className="bg-bluethree hover:bg-bluetwo text-white px-8 py-3 mt-5 rounded-full font-medium ">
               Make A Donation
@@ -84,7 +131,7 @@ const DonationItemPage = () => {
             />
             <img
               className=" absolute top-7 md:top-10 xl:top-0  right-7 z-30 size-64 md:size-[18rem] xl:size-[22rem] aspect-square rounded-full image-glow"
-              src={checkimg}
+              src={myCampaign?.image}
             ></img>
           </div>
           <img
@@ -118,19 +165,31 @@ const DonationItemPage = () => {
         </div>
         <div className="text-center z-50 ">
           <div className="xl:absolute -bottom-16 right-64 mx-auto xl:mx-24 mb-2 mt-5 border xl:border-none border-black w-fit z-50 flex flex-col md:flex-row justify-center items-center gap-0 md:gap-8 bg-white rounded-lg  shadow-xl">
-            {ourNumber.map((data) => (
-              <div key={data.id} className="text-center p-8 rounded-lg">
+          <div className="text-center p-8 rounded-lg">
                 <p className="text-primary text-4xl font-extrabold">
-                  {data.number}
+                {String(myCampaign?.amountCollected)[0] }{String(myCampaign?.amountCollected)[1]}
                 </p>
                 <div className="h-[1.5px] rounded-full w-10 mx-auto bg-gray-800 mb-2"></div>
-                <p className="font-bold text-sm">{data.title}</p>
+                <p className="font-bold text-sm">Amount raised</p>
               </div>
-            ))}
+              <div className="text-center p-8 rounded-lg">
+                <p className="text-primary text-4xl font-extrabold">
+                {Number(myCampaign?.target)}
+                </p>
+                <div className="h-[1.5px] rounded-full w-10 mx-auto bg-gray-800 mb-2"></div>
+                <p className="font-bold text-sm">Goal</p>
+              </div>
+              <div className="text-center p-8 rounded-lg">
+                <p className="text-primary text-4xl font-extrabold">
+                {getDaysLeft(Number(myCampaign?.deadline)*1000 )} 
+                </p>
+                <div className="h-[1.5px] rounded-full w-10 mx-auto bg-gray-800 mb-2"></div>
+                <p className="font-bold text-sm"> Day left</p>
+              </div>
             <div className="hidden xl:block bg-bluefour text-white p-8 px-10 rounded-r-lg text-left">
               <div className="h-[2px] rounded-full w-10  bg-gray-800 mb-2"></div>
               <p className="font-bold">
-                Our Goal is to <br /> Help Poor People
+                {myCampaign?.owner}
               </p>
               <p className="mt-2 text-bluefive text-sm">
                 become a Volunteer{" "}
@@ -185,36 +244,17 @@ const DonationItemPage = () => {
         </p>
        </div>
        <div className='w-full h-[440px] overflow-y-scroll'>
-         <div className='flex  items-center gap-3 p-2 image-glow rounded-lg m-5'>
+       {
+          myCampaign?.donators &&  myCampaign?.donators.map((e)=>{
+            return(
+            <div className='flex  items-center gap-3 p-2 image-glow rounded-lg m-5'>
           <img src="https://github.com/shadcn.png" alt="" className='rounded-full ' width={50} height={50}  />
           <h4 className="font-epilogue font-semibold  ml-4  text-blueone">
-          Back it because you believe in it.
+          {e}
         </h4>
-         </div>
-         <div className='flex  items-center gap-3 p-2 image-glow rounded-lg m-5'>
-          <img src="https://github.com/shadcn.png" alt="" className='rounded-full ' width={50} height={50}  />
-          <h4 className="font-epilogue font-semibold  ml-4   text-blueone">
-          Back it because you believe in it.
-        </h4>
-         </div>
-         <div className='flex  items-center gap-3 p-2 image-glow rounded-lg m-5'>
-          <img src="https://github.com/shadcn.png" alt="" className='rounded-full ' width={50} height={50}  />
-          <h4 className="font-epilogue font-semibold  ml-4   text-blueone">
-          Back it because you believe in it.
-        </h4>
-         </div>
-         <div className='flex  items-center gap-3 p-2 image-glow rounded-lg m-5'>
-          <img src="https://github.com/shadcn.png" alt="" className='rounded-full ' width={50} height={50}  />
-          <h4 className="font-epilogue font-semibold  ml-4   text-blueone">
-          Back it because you believe in it.
-        </h4>
-         </div>
-         <div className='flex  items-center gap-3 p-2 image-glow rounded-lg m-5'>
-          <img src="https://github.com/shadcn.png" alt="" className='rounded-full ' width={50} height={50}  />
-          <h4 className="font-epilogue font-semibold  ml-4   text-blueone">
-     Back it because you believe in it.
-     </h4>
-    </div>
+         </div>)
+          })
+        }
     </div>   
     </div>
     <div className=' flex justify-center w-[50%] items-center h-[500px] mt-[20px]  rounded-lg' >
@@ -230,6 +270,8 @@ const DonationItemPage = () => {
         step="0.01"
         className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-black text-[18px] leading-[30px] placeholder:text-[#4b5264] rounded-[10px]"
         aria-label="Amount to fund in ETH"
+        value={a}
+        onChange={(e)=>{setamount(e.target.value)}}
       />
 
       <div className="my-[20px] p-4 bg-bluefive rounded-[10px]">
@@ -240,11 +282,11 @@ const DonationItemPage = () => {
           Support the project for no reward, just because it speaks to you.
         </p>
       </div>
-
       <CustomButton 
         btnType="button"
         title="Fund Campaign"
         styles="w-full bg-[#8c6dfd]"
+        handleClick={handledonate}
       />
       </div>
       </div>
@@ -265,11 +307,11 @@ const DonationItemPage = () => {
        Total  Votes
       </h1>
         <p>
-          10 +
+         {myCampaign?.noofvotes ? `${Number(myCampaign?.noofvotes)}` :"0"}
         </p>
      </div>
-     <div className='p-5 text-center bg-red-500 pointer text-bluefive rounded-md'>
-      <h1 className='font-bold '>
+     <div className='p-5 text-center bg-red-500 cursor-pointer text-bluefive rounded-md'>
+      <h1 className='font-bold ' onClick={voteit}>
       Give A VOTE
       </h1>
        
