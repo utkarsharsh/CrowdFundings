@@ -5,8 +5,7 @@ import toast from "react-hot-toast";
 import axios from 'axios'
 import charitybg from "../assets/charitybg.png" 
 import "../index.css"
-const CreateCampaignPage = () => {
-  const [fileNames, setFileNames] = useState(Array(3).fill(""));
+
 
 const CreateCampaignPage = ({account}) => {
   const [fileNames, setFileNames] = useState(Array(4).fill(""));
@@ -61,14 +60,22 @@ const CreateCampaignPage = ({account}) => {
     }
     const result = await CreatCampaign(account,form);
     if(result.result){
+     const {data}=await axios.post("",{address:account,
+      identity:Number(result.teams),
+      images:images
+     })
+
      toast.success("Campaign has been added");
      setDeadline("");
      setDescription("");
      setTarget("");
-     setTitle("")
-     setTypes("")
-     setTheme("")
+     setTitle("");
+     setTypes("");
+     setTheme("");
         }
+     
+    
+
 
   }
 
@@ -240,7 +247,7 @@ const CreateCampaignPage = ({account}) => {
                   accept="image/*,video/*"
                   id={`file-upload-${index}`}
                   className="hidden"
-                  onChange={(event) =>handleOtherimgChange}
+                  onChange={handleOtherimgChange}
                   required
                 />
                 <label
@@ -249,7 +256,7 @@ const CreateCampaignPage = ({account}) => {
                 >
                   Choose File
                 </label>
-                {fileNames[index] && <span className="ml-4 text-gray-700">{fileNames[index]}</span>}
+                {images[index] && <span className="ml-4 text-gray-700">{images[index]}</span>}
               </div>
             ))}
           </div>
@@ -267,6 +274,6 @@ const CreateCampaignPage = ({account}) => {
       </div>
     </div>
   );
-}};
+};
 
 export default CreateCampaignPage

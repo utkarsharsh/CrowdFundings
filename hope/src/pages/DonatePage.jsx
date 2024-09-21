@@ -70,12 +70,12 @@ const DonatePage = ({account}) => {
                           <p className="text-xl mt-1 font-bold">{data.title}</p>
                           <div className="flex items-center gap-3">
                             <p className="text-sm text-red-500 mt-1 font-bold">
-                              Id: {data.id}
+                              Id: {data?.owner}
                             </p>
                             <button
                               onClick={() => {
                                 navigator.clipboard
-                                  .writeText(data.id)
+                                  .writeText(data?.owner)
                                   .then(() => toast.success("Text Copied"))
                                   .catch(() => toast.error("Failed to Copy"));
                               }}
@@ -86,23 +86,12 @@ const DonatePage = ({account}) => {
                               <MdContentCopy />
                             </button>
                           </div>
-                          <p className="text-sm text-slate-500 font-medium flex items-center gap-1 ">{data.name} {data.premium && <span title="Membership"><MdStars className="text-yellow-500 text-xl " /></span>} </p>
+                        
 
-                        <p className="text-xl mt-1 font-bold">{data?.title}</p>
+                      
                         <div className="flex items-center gap-3" >
-                        <p className="text-sm text-red-500 mt-1 font-bold">Id: {data?.owner}</p>
-                        <button
-    onClick={() => {
-        navigator.clipboard.writeText(data.owner)
-            .then(() => toast.success("Text Copied"))
-            .catch(() => toast.error("Failed to Copy"));
-    }}
-    className="ml-2 p-1 text-sm hover:bg-gray-200 rounded"
-    aria-label="Copy ID"
-    title="Copy ID"
->
-    <MdContentCopy />
-</button>
+                        <p className="text-lg text-yellow-500 mt-1 font-bold">{Number(data?.id)<=10 && <MdStars/> }</p>
+                     
                         </div>
 
                         </div>
@@ -136,7 +125,7 @@ const DonatePage = ({account}) => {
                     <div className="flex items-center justify-between">
                       <p className="flex items-center gap-1 font-semibold">
 
-                        <span className="font-extrabold">Ξ</span> { Number(data?.amountCollected)}
+                        <span className="font-extrabold">Ξ</span> { String(data?.amountCollected)[0]}{ String(data?.amountCollected)[1]}
                       </p>
                       <p className="flex items-center gap-1 text-violet-700 font-semibold">
                         <span className="font-extrabold">Ξ</span> {Number(data?.target)}
@@ -148,7 +137,7 @@ const DonatePage = ({account}) => {
                         className="bg-red-600 rounded-full h-full"
                         style={{
                           width: `${
-                            (data.raisedAmount / data.requiredAmount) * 100
+                            (25 / Number(data?.target)) * 100
                           }%`,
                         }}
                       ></div>
